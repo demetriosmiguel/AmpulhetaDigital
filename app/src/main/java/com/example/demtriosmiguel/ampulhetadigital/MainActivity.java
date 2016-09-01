@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         // habilitando e desabilitando os botões
 
-        btstart.setEnabled(true);
-        btpause.setEnabled(false);
-        btStop.setEnabled(false);
-        btReset.setEnabled(false);
 
         // setando os botoes passando os evendos de click condicionando o mesmo  e startando o cronometro;
 
@@ -80,15 +76,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
 
-                btstart.setEnabled(false);
-                btpause.setEnabled(true);
-                btStop.setEnabled(true);
-                btReset.setEnabled(true);
 
                 if (Click)
                     chronometer.setBase(SystemClock.elapsedRealtime());
 
                 chronometer.start();
+
+                btstart.setVisibility(View.GONE);
+                btpause.setVisibility(View.VISIBLE);
+                btReset.setVisibility(View.VISIBLE);
+                btStop.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -97,13 +95,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
 
-                btstart.setEnabled(true);
-                btpause.setEnabled(false);
-                btStop.setEnabled(true);
-                btReset.setEnabled(true);
-
                 Click = false;
                 chronometer.stop();
+
+                btstart.setVisibility(View.VISIBLE);
+                btpause.setVisibility(View.GONE);
+                btReset.setVisibility(View.VISIBLE);
+                btStop.setVisibility(View.VISIBLE);
 
             }
         });
@@ -113,14 +111,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
 
-                btstart.setEnabled(true);
-                btpause.setEnabled(false);
-                btStop.setEnabled(false);
-                btReset.setEnabled(false);
-
                 Click = true;
                 chronometer.stop();
                 chronometer.setText("Tempo (00:00)");
+
+                btstart.setVisibility(View.VISIBLE);
+                btpause.setVisibility(View.GONE);
+                btReset.setVisibility(View.GONE);
+                btStop.setVisibility(View.GONE);
 
             }
         });
@@ -130,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
 
-                btstart.setEnabled(false);
-                btpause.setEnabled(true);
-                btStop.setEnabled(true);
-                btReset.setEnabled(true);
+                btstart.setVisibility(View.GONE);
+                btpause.setVisibility(View.VISIBLE);
+                btReset.setVisibility(View.VISIBLE);
+                btStop.setVisibility(View.VISIBLE);
 
                 Click = true;
                 chronometer.stop();

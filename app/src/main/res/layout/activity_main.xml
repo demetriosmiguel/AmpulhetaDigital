@@ -20,7 +20,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="122dp"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_x="1dp"
@@ -28,27 +28,28 @@
 
         <Button
             android:id="@+id/btstart"
-            android:layout_width="95sp"
-            android:layout_height="wrap_content"
-            android:text="Start" />
+            android:layout_width="70dp"
+            android:layout_height="68dp"
+            android:background="@drawable/ic_play_circle_outline_white_48dp" />
 
         <Button
             android:id="@+id/btpause"
-            android:layout_width="95sp"
-            android:layout_height="wrap_content"
-            android:text="Pause" />
+            android:layout_width="70sp"
+            android:layout_height="68sp"
+            android:background="@drawable/ic_pause_circle_outline_white_48dp" />
 
         <Button
             android:id="@+id/btStop"
-            android:layout_width="95sp"
-            android:layout_height="wrap_content"
-            android:text="Stop" />
+            android:layout_width="70sp"
+            android:layout_height="68sp"
+            android:background="@drawable/ic_stop_white_48dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reset"
-            android:id="@+id/btReset" />
+            android:layout_width="70sp"
+            android:layout_height="68sp"
+            android:text="@string/reset"
+            android:id="@+id/btReset"
+            android:background="@drawable/ic_replay_white_48dp" />
 
     </LinearLayout>
 

@@ -14,43 +14,91 @@
         android:textSize="35sp" android:format="Tempo (%s)"
         android:layout_gravity="center_horizontal"
         android:textColor="#ffffff"
-        android:layout_x="88dp"
-        android:layout_y="80dp" />
+        android:layout_x="87dp"
+        android:layout_y="115dp" />
 
-    <LinearLayout
+    <AbsoluteLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="122dp"
+        android:layout_height="160dp"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_x="1dp"
-        android:layout_y="424dp">
-
-        <Button
-            android:id="@+id/btstart"
-            android:layout_width="70dp"
-            android:layout_height="68dp"
-            android:background="@drawable/ic_play_circle_outline_white_48dp" />
-
-        <Button
-            android:id="@+id/btpause"
-            android:layout_width="70sp"
-            android:layout_height="68sp"
-            android:background="@drawable/ic_pause_circle_outline_white_48dp" />
-
-        <Button
-            android:id="@+id/btStop"
-            android:layout_width="70sp"
-            android:layout_height="68sp"
-            android:background="@drawable/ic_stop_white_48dp" />
+        android:layout_y="380dp">
 
         <Button
             android:layout_width="70sp"
             android:layout_height="68sp"
             android:text="@string/reset"
             android:id="@+id/btReset"
-            android:background="@drawable/ic_replay_white_48dp" />
+            android:background="@drawable/ic_replay_white_48dp"
+            android:layout_x="10dp"
+            android:layout_y="6dp" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btstart"
+            android:layout_width="70dp"
+            android:layout_height="68dp"
+            android:background="@drawable/ic_play_circle_outline_white_48dp"
+            android:layout_x="110dp"
+            android:layout_y="6dp" />
+
+        <Button
+            android:id="@+id/btpauseId"
+            android:layout_width="70sp"
+            android:layout_height="68sp"
+            android:background="@drawable/ic_pause_circle_outline_white_48dp"
+            android:layout_x="210dp"
+            android:layout_y="6dp" />
+
+        <Button
+            android:id="@+id/btStop"
+            android:layout_width="70sp"
+            android:layout_height="68sp"
+            android:background="@drawable/ic_stop_white_48dp"
+            android:layout_x="292dp"
+            android:layout_y="9dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="INICIAR"
+            android:id="@+id/textoIniciarId"
+            android:layout_x="115dp"
+            android:layout_y="77dp"
+            android:textColor="#FF837F7F" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="PAUSE"
+            android:id="@+id/textoPausarId"
+            android:layout_x="217dp"
+            android:layout_y="75dp"
+            android:textColor="#FF837F7F" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="PARA"
+            android:id="@+id/textoPararId"
+            android:layout_x="302dp"
+            android:layout_y="75dp"
+            android:textColor="#FF837F7F" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="RENICIAR"
+            android:id="@+id/textoReniciarId"
+            android:layout_x="10dp"
+            android:layout_y="77dp"
+            android:textColor="#FF837F7F" />
+
+    </AbsoluteLayout>
 
 </AbsoluteLayout>

@@ -20,7 +20,9 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="50sp" android:orientation="horizontal" android:gravity="center"
+        android:layout_height="50sp"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_x="1dp"
         android:layout_y="424dp">
 
@@ -37,10 +39,16 @@
             android:text="Pause" />
 
         <Button
-            android:id="@+id/btreset"
+            android:id="@+id/btStop"
             android:layout_width="95sp"
             android:layout_height="wrap_content"
-            android:text="Reset" />
+            android:text="Stop" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:id="@+id/btReset" />
 
     </LinearLayout>
 

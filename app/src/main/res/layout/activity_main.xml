@@ -29,26 +29,9 @@
         <Button
             android:layout_width="70sp"
             android:layout_height="68sp"
-            android:text="@string/reset"
             android:id="@+id/btReset"
             android:background="@drawable/ic_replay_white_48dp"
             android:layout_x="10dp"
-            android:layout_y="6dp" />
-
-        <Button
-            android:id="@+id/btstart"
-            android:layout_width="70dp"
-            android:layout_height="68dp"
-            android:background="@drawable/ic_play_circle_outline_white_48dp"
-            android:layout_x="110dp"
-            android:layout_y="6dp" />
-
-        <Button
-            android:id="@+id/btpauseId"
-            android:layout_width="70sp"
-            android:layout_height="68sp"
-            android:background="@drawable/ic_pause_circle_outline_white_48dp"
-            android:layout_x="210dp"
             android:layout_y="6dp" />
 
         <Button
@@ -57,33 +40,13 @@
             android:layout_height="68sp"
             android:background="@drawable/ic_stop_white_48dp"
             android:layout_x="292dp"
-            android:layout_y="9dp" />
+            android:layout_y="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="INICIAR"
-            android:id="@+id/textoIniciarId"
-            android:layout_x="115dp"
-            android:layout_y="77dp"
-            android:textColor="#FF837F7F" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="PAUSE"
-            android:id="@+id/textoPausarId"
-            android:layout_x="217dp"
-            android:layout_y="75dp"
-            android:textColor="#FF837F7F" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="PARA"
+            android:text="@string/para"
             android:id="@+id/textoPararId"
             android:layout_x="302dp"
             android:layout_y="75dp"
@@ -93,11 +56,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="RENICIAR"
+            android:text="@string/reniciar"
             android:id="@+id/textoReniciarId"
             android:layout_x="10dp"
             android:layout_y="77dp"
             android:textColor="#FF837F7F" />
+
+        <FrameLayout
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_x="89dp"
+            android:layout_y="7dp">
+
+            <Button
+                android:id="@+id/btstart"
+                android:layout_width="70dp"
+                android:layout_height="68dp"
+                android:background="@drawable/ic_play_circle_outline_white_48dp"
+                android:layout_gravity="center_horizontal|top" />
+
+            <Button
+                android:id="@+id/btpauseId"
+                android:layout_width="70sp"
+                android:layout_height="68sp"
+                android:background="@drawable/ic_pause_circle_outline_white_48dp"
+                android:layout_gravity="center_horizontal|top" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/iniciar"
+                android:id="@+id/textoIniciarId"
+                android:textColor="#FF837F7F"
+                android:layout_gravity="center_horizontal|bottom" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/pause"
+                android:id="@+id/textoPausarId"
+                android:textColor="#FF837F7F"
+                android:layout_gravity="center_horizontal|bottom" />
+        </FrameLayout>
 
     </AbsoluteLayout>
 

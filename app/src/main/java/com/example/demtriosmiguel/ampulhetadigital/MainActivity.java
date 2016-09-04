@@ -3,11 +3,16 @@ package com.example.demtriosmiguel.ampulhetadigital;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView textViewTimer;
+    Button botaoIniciar;
+    Button botaoPausar;
+    Button botaoReiniciar;
+    Button botaoParar;
 
     private long calculoHoras;
     private long calculoMinutos;
@@ -19,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
 
+    private boolean emExecucao = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,32 +33,83 @@ public class MainActivity extends AppCompatActivity {
 
         textViewTimer = (TextView) findViewById(R.id.textViewTimer);
 
-        // formula para calculo de tempo
-        /*
-            1 hora = 60 minutos = 3600 segundos
+        botaoIniciar = (Button) findViewById(R.id.botaoIniciar);
+        botaoPausar = (Button) findViewById(R.id.botaoPausar);
+        botaoReiniciar = (Button) findViewById(R.id.botaoReiniciar);
+        botaoParar = (Button) findViewById(R.id.botaoParar);
 
-            2 horas long/ 30 minutos / 25 segundos
-            25 + (30 * 60) + (2 * 60 * 60) = 9025 segundos totais
-
-            9025 /long ((60 * 60) = 3600) =  2,5 pegar valor absoluto = 2
-
-            2 * 3600 (long7200) - 9025 = 1825 / 60 = 30 pegar valor absoluto
-
-            30 * 60 = 1800 + 7200 = 9000
-         */
+        botaoPausar.setVisibility(View.GONE);
+        botaoReiniciar.setVisibility(View.GONE);
+        botaoParar.setVisibility(View.GONE);
 
         // entradas do usuario
-        int segundos = 25; // 99 máximo
-        int minutos = 30; // 59 máximo
-        int horas = 2; // 59 máximo
+        int segundos = 10; // 59 máximo
+        int minutos = 0; // 59 máximo
+        int horas = 0; // 99 máximo
 
         // somatorio das entradas em segundos
         setTempoTotalEmSeguntos(segundos, minutos, horas);
+        calculaHorasMinutosSegundos();
+        exibeTempoFormatado();
 
-//        calculaHorasMinutosSegundos();
-//        exibeTempoFormatado();
+        botaoIniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emExecucao = true;
+                executaCronometro();
 
-        countDownStart();
+                botaoIniciar.setVisibility(View.GONE);
+                botaoPausar.setVisibility(View.VISIBLE);
+                botaoReiniciar.setVisibility(View.VISIBLE);
+                botaoParar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        botaoPausar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emExecucao = false;
+                handler.removeCallbacks(runnable);
+
+                botaoIniciar.setVisibility(View.VISIBLE);
+                botaoPausar.setVisibility(View.GONE);
+                botaoReiniciar.setVisibility(View.VISIBLE);
+                botaoParar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        botaoReiniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handler.removeCallbacks(runnable);
+                seguntosTotais = seguntosTotaisInicial;
+                emExecucao = true;
+                executaCronometro();
+
+                botaoIniciar.setVisibility(View.GONE);
+                botaoPausar.setVisibility(View.VISIBLE);
+                botaoReiniciar.setVisibility(View.VISIBLE);
+                botaoParar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        botaoParar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handler.removeCallbacks(runnable);
+                seguntosTotais = seguntosTotaisInicial;
+                emExecucao = false;
+
+                calculaHorasMinutosSegundos();
+                exibeTempoFormatado();
+
+                botaoIniciar.setVisibility(View.VISIBLE);
+                botaoPausar.setVisibility(View.GONE);
+                botaoReiniciar.setVisibility(View.GONE);
+                botaoParar.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     private void setTempoTotalEmSeguntos(int segundos, int minutos, int horas) {
@@ -100,19 +158,27 @@ public class MainActivity extends AppCompatActivity {
         textViewTimer.setText(timerDisplay.toString());
     }
 
-    public void countDownStart() {
+    public void executaCronometro() {
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
                 try {
-                    if (true) {
+                    if (emExecucao && seguntosTotais > 0) {
+                        seguntosTotais--;
                         calculaHorasMinutosSegundos();
                         exibeTempoFormatado();
-                        seguntosTotais--;
                     } else {
                         handler.removeCallbacks(runnable);
+
+                        emExecucao = false;
+                        seguntosTotais = seguntosTotaisInicial;
+
+                        botaoIniciar.setVisibility(View.VISIBLE);
+                        botaoPausar.setVisibility(View.GONE);
+                        botaoReiniciar.setVisibility(View.GONE);
+                        botaoParar.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

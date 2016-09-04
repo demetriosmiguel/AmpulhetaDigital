@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="00:00:00"
-            android:id="@+id/textView"
+            android:text="@string/relogio_zerado"
+            android:id="@+id/textViewTimer"
             android:gravity="center_vertical|center_horizontal"
             android:textColor="#E5E5E5"
             android:textSize="60sp" />

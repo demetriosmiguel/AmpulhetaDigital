@@ -4,5 +4,6 @@
     <string name="pause">PAUSE</string>
     <string name="para">PARA</string>
     <string name="reniciar">RENICIAR</string>
+    <string name="relogio_zerado">00:00:00</string>
 
 </resources>

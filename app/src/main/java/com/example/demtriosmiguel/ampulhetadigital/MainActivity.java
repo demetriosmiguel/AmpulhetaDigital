@@ -2,16 +2,16 @@ package com.example.demtriosmiguel.ampulhetadigital;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
 import android.widget.*;
-import android.view.*;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView textViewTimer;
+
+    private long calculoHoras;
+    private long calculoMinutos;
+    private long calculoSegundos;
+    private long seguntosTotais;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,33 +22,72 @@ public class MainActivity extends AppCompatActivity {
         /*
             1 hora = 60 minutos = 3600 segundos
 
-            2 horas / 30 minutos / 25 segundos
+            2 horas long/ 30 minutos / 25 segundos
             25 + (30 * 60) + (2 * 60 * 60) = 9025 segundos totais
 
-            9025 / ((60 * 60) = 3600) =  2,5 pegar valor absoluto = 2
+            9025 /long ((60 * 60) = 3600) =  2,5 pegar valor absoluto = 2
 
-            2 * 3600 (7200) - 9025 = 1825 / 60 = 30 pegar valor absoluto
+            2 * 3600 (long7200) - 9025 = 1825 / 60 = 30 pegar valor absoluto
 
             30 * 60 = 1800 + 7200 = 9000
          */
 
         // entradas do usuario
-        int segundos = 25;
-        int minutos = 30;
-        int horas = 2;
+        int segundos = 25; // 99 máximo
+        int minutos = 30; // 59 máximo
+        int horas = 2; // 59 máximo
 
         // somatorio das entradas em segundos
-        long seguntosTotais = segundos + (minutos * 60) + (horas * 60 * 60);
+        seguntosTotais = getTempoTotalEmSeguntos(segundos, minutos, horas);
 
-        long calculoHoras = Math.abs(seguntosTotais / 3600); // 2 horas
-        long calculoDiferencaMinutosEmSegundos = calculoHoras * 3600; // 7200
-        long calculoMinutos = Math.abs((calculoDiferencaMinutosEmSegundos - seguntosTotais) / 60); // 30 minutos
-        long calculoHorasMinutosEmSegundos = (calculoMinutos * 60) + calculoDiferencaMinutosEmSegundos; // 9000
-        long calculoSegundos = seguntosTotais - calculoHorasMinutosEmSegundos;
+        calculaHorasMinutosSegundos();
 
-        Log.i("HORAS", String.valueOf(calculoHoras));
-        Log.i("MINUTOS", String.valueOf(calculoMinutos));
-        Log.i("SEGUNDOS", String.valueOf(calculoSegundos));
+        textViewTimer = (TextView) findViewById(R.id.textViewTimer);
 
+        exibeTempoFormatado();
+
+    }
+
+    private long getTempoTotalEmSeguntos(int segundos, int minutos, int horas) {
+        return (long) (segundos + (minutos * 60) + (horas * 60 * 60));
+    }
+
+    private void calculaHorasMinutosSegundos() {
+        calculoHoras = Math.abs(seguntosTotais / 3600); // horas
+        long calculoDiferencaMinutosEmSegundos = calculoHoras * 3600;
+        calculoMinutos = Math.abs((calculoDiferencaMinutosEmSegundos - seguntosTotais) / 60); // minutos
+        long calculoHorasMinutosEmSegundos = (calculoMinutos * 60) + calculoDiferencaMinutosEmSegundos;
+        calculoSegundos = seguntosTotais - calculoHorasMinutosEmSegundos; // segundos
+    }
+
+    private void exibeTempoFormatado() {
+        String horas = "";
+        String minutos = "";
+        String segundos = "";
+
+        if (calculoHoras < 10) {
+            horas = "0"+calculoHoras;
+        } else {
+            horas += calculoHoras;
+        }
+
+        if (calculoMinutos < 10) {
+            minutos = "0"+calculoMinutos;
+        } else {
+            minutos += calculoMinutos;
+        }
+
+        if (calculoSegundos < 10) {
+            segundos = "0"+calculoSegundos;
+        } else {
+            segundos += calculoSegundos;
+        }
+
+        StringBuilder timerDisplay = new StringBuilder();
+        timerDisplay.append(horas).append(":");
+        timerDisplay.append(minutos).append(":");
+        timerDisplay.append(segundos);
+
+        textViewTimer.setText(timerDisplay.toString());
     }
 }

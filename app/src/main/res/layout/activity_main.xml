@@ -1,106 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#070000">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333"
+    android:weightSum="5">
 
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="35sp" android:format="Tempo (%s)"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffffff"
-        android:layout_x="87dp"
-        android:layout_y="115dp" />
-
-    <AbsoluteLayout
-        android:id="@+id/linearLayout3"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="00:00:00"
+            android:id="@+id/textView"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#E5E5E5"
+            android:textSize="60sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_x="1dp"
-        android:layout_y="380dp">
+        android:baselineAligned="false"
+        android:weightSum="3"
+        android:layout_weight="1">
 
-        <Button
-            android:layout_width="70sp"
-            android:layout_height="68sp"
-            android:id="@+id/btReset"
-            android:background="@drawable/ic_replay_white_48dp"
-            android:layout_x="10dp"
-            android:layout_y="6dp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btStop"
-            android:layout_width="70sp"
-            android:layout_height="68sp"
-            android:background="@drawable/ic_stop_white_48dp"
-            android:layout_x="292dp"
-            android:layout_y="5dp" />
+            <Button
+                android:id="@+id/botaoReiniciar"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:background="@drawable/ic_replay_white_48dp"
+                android:visibility="visible"
+                android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/para"
-            android:id="@+id/textoPararId"
-            android:layout_x="302dp"
-            android:layout_y="75dp"
-            android:textColor="#FF837F7F" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/reniciar"
-            android:id="@+id/textoReniciarId"
-            android:layout_x="10dp"
-            android:layout_y="77dp"
-            android:textColor="#FF837F7F" />
+        </LinearLayout>
 
         <FrameLayout
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_x="89dp"
-            android:layout_y="7dp">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <Button
-                android:id="@+id/btstart"
-                android:layout_width="70dp"
-                android:layout_height="68dp"
-                android:background="@drawable/ic_play_circle_outline_white_48dp"
-                android:layout_gravity="center_horizontal|top" />
-
-            <Button
-                android:id="@+id/btpauseId"
-                android:layout_width="70sp"
-                android:layout_height="68sp"
+                android:id="@+id/botaoPausar"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
                 android:background="@drawable/ic_pause_circle_outline_white_48dp"
-                android:layout_gravity="center_horizontal|top" />
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical|center_horizontal"
+                android:visibility="visible"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/iniciar"
-                android:id="@+id/textoIniciarId"
-                android:textColor="#FF837F7F"
-                android:layout_gravity="center_horizontal|bottom" />
+            <Button
+                android:id="@+id/botaoIniciar"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:background="@drawable/ic_play_circle_outline_white_48dp"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:gravity="center_vertical|center_horizontal" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/pause"
-                android:id="@+id/textoPausarId"
-                android:textColor="#FF837F7F"
-                android:layout_gravity="center_horizontal|bottom" />
         </FrameLayout>
 
-    </AbsoluteLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-</AbsoluteLayout>
+            <Button
+                android:id="@+id/botaoParar"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:background="@drawable/ic_stop_white_48dp"
+                android:visibility="visible"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.demtriosmiguel.ampulhetadigital;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.*;
@@ -13,10 +14,17 @@ public class MainActivity extends AppCompatActivity {
     private long calculoSegundos;
     private long seguntosTotais;
 
+    private long seguntosTotaisInicial;
+
+    private Handler handler;
+    private Runnable runnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textViewTimer = (TextView) findViewById(R.id.textViewTimer);
 
         // formula para calculo de tempo
         /*
@@ -38,18 +46,19 @@ public class MainActivity extends AppCompatActivity {
         int horas = 2; // 59 máximo
 
         // somatorio das entradas em segundos
-        seguntosTotais = getTempoTotalEmSeguntos(segundos, minutos, horas);
+        setTempoTotalEmSeguntos(segundos, minutos, horas);
 
-        calculaHorasMinutosSegundos();
+//        calculaHorasMinutosSegundos();
+//        exibeTempoFormatado();
 
-        textViewTimer = (TextView) findViewById(R.id.textViewTimer);
-
-        exibeTempoFormatado();
-
+        countDownStart();
     }
 
-    private long getTempoTotalEmSeguntos(int segundos, int minutos, int horas) {
-        return (long) (segundos + (minutos * 60) + (horas * 60 * 60));
+    private void setTempoTotalEmSeguntos(int segundos, int minutos, int horas) {
+        seguntosTotais = (segundos + (minutos * 60) + (horas * 60 * 60));
+
+        // registra tempo total definido para caso o cronometro seja reiniciado ou parado
+        seguntosTotaisInicial = seguntosTotais;
     }
 
     private void calculaHorasMinutosSegundos() {
@@ -89,5 +98,27 @@ public class MainActivity extends AppCompatActivity {
         timerDisplay.append(segundos);
 
         textViewTimer.setText(timerDisplay.toString());
+    }
+
+    public void countDownStart() {
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this, 1000);
+                try {
+                    if (true) {
+                        calculaHorasMinutosSegundos();
+                        exibeTempoFormatado();
+                        seguntosTotais--;
+                    } else {
+                        handler.removeCallbacks(runnable);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        handler.postDelayed(runnable, 0);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.demtriosmiguel.ampulhetadigital;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private long calculoHoras;
     private long calculoMinutos;
     private long calculoSegundos;
-    private long seguntosTotais;
+    private long segundosTotais;
 
     private long seguntosTotaisInicial;
 
@@ -44,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
         botaoReiniciar.setVisibility(View.GONE);
         botaoParar.setVisibility(View.GONE);
 
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
         // entradas do usuario
-        int segundos = 10; // 59 máximo
-        int minutos = 0; // 59 máximo
+        int segundos = 0; // 59 máximo
+        int minutos = Integer.parseInt(SP.getString("MinutosId", "0")); // 59 máximo
         int horas = 0; // 99 máximo
 
         // somatorio das entradas em segundos
-        setTempoTotalEmSeguntos(segundos, minutos, horas);
+        setTempoTotalEmSegundos(segundos, minutos, horas);
         calculaHorasMinutosSegundos();
         exibeTempoFormatado();
 
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 emExecucao = true;
                 executaCronometro();
+
 
                 botaoIniciar.setVisibility(View.GONE);
                 botaoPausar.setVisibility(View.VISIBLE);
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 handler.removeCallbacks(runnable);
-                seguntosTotais = seguntosTotaisInicial;
+                segundosTotais = seguntosTotaisInicial;
                 emExecucao = true;
                 executaCronometro();
 
@@ -99,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 handler.removeCallbacks(runnable);
-                seguntosTotais = seguntosTotaisInicial;
+                segundosTotais = seguntosTotaisInicial;
                 emExecucao = false;
 
                 calculaHorasMinutosSegundos();
@@ -114,19 +120,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setTempoTotalEmSeguntos(int segundos, int minutos, int horas) {
-        seguntosTotais = (segundos + (minutos * 60) + (horas * 60 * 60));
+    private void setTempoTotalEmSegundos(int segundos, int minutos, int horas) {
+        segundosTotais = (segundos + (minutos * 60) + (horas * 60 * 60));
 
         // registra tempo total definido para caso o cronometro seja reiniciado ou parado
-        seguntosTotaisInicial = seguntosTotais;
+        seguntosTotaisInicial = segundosTotais;
     }
 
     private void calculaHorasMinutosSegundos() {
-        calculoHoras = Math.abs(seguntosTotais / 3600); // horas
+        calculoHoras = Math.abs(segundosTotais / 3600); // horas
         long calculoDiferencaMinutosEmSegundos = calculoHoras * 3600;
-        calculoMinutos = Math.abs((calculoDiferencaMinutosEmSegundos - seguntosTotais) / 60); // minutos
+        calculoMinutos = Math.abs((calculoDiferencaMinutosEmSegundos - segundosTotais) / 60); // minutos
         long calculoHorasMinutosEmSegundos = (calculoMinutos * 60) + calculoDiferencaMinutosEmSegundos;
-        calculoSegundos = seguntosTotais - calculoHorasMinutosEmSegundos; // segundos
+        calculoSegundos = segundosTotais - calculoHorasMinutosEmSegundos; // segundos
     }
 
     private void exibeTempoFormatado() {
@@ -167,15 +173,15 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 handler.postDelayed(this, 1000);
                 try {
-                    if (emExecucao && seguntosTotais > 0) {
-                        seguntosTotais--;
+                    if (emExecucao && segundosTotais > 0) {
+                        segundosTotais--;
                         calculaHorasMinutosSegundos();
                         exibeTempoFormatado();
                     } else {
                         handler.removeCallbacks(runnable);
 
                         emExecucao = false;
-                        seguntosTotais = seguntosTotaisInicial;
+                        segundosTotais = seguntosTotaisInicial;
 
                         botaoIniciar.setVisibility(View.VISIBLE);
                         botaoPausar.setVisibility(View.GONE);
@@ -206,7 +212,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+
+            Intent novo = new Intent(MainActivity.this, PreferenciasActivity.class);
+            startActivity(novo);
         }
 
         return super.onOptionsItemSelected(item);

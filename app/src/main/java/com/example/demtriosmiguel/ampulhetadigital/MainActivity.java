@@ -43,28 +43,35 @@ public class MainActivity extends AppCompatActivity {
         botaoReiniciar = (Button) findViewById(R.id.botaoReiniciar);
         botaoParar = (Button) findViewById(R.id.botaoParar);
 
-        botaoPausar.setVisibility(View.GONE);
+        Cronometro cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar);
+
+        /*botaoPausar.setVisibility(View.GONE);
         botaoReiniciar.setVisibility(View.GONE);
-        botaoParar.setVisibility(View.GONE);
+        botaoParar.setVisibility(View.GONE);*/
 
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         // entradas do usuario
-        int segundos = 0; // 59 máximo
-        int minutos = Integer.parseInt(SP.getString("MinutosId", "0")); // 59 máximo
+        int segundos = 10; // 59 máximo
+//        int minutos = Integer.parseInt(SP.getString("MinutosId", "0")); // 59 máximo
+        int minutos = 0; // 59 máximo
         int horas = 0; // 99 máximo
 
+        cronometro.setHorasMinutosSegundos(horas, minutos, segundos);
+        cronometro.setTempoTotalEmSegundos();
+        cronometro.calculaHorasMinutosSegundos();
+        cronometro.exibeTempoFormatado();
+
         // somatorio das entradas em segundos
-        setTempoTotalEmSegundos(segundos, minutos, horas);
+        /*setTempoTotalEmSegundos(segundos, minutos, horas);
         calculaHorasMinutosSegundos();
-        exibeTempoFormatado();
+        exibeTempoFormatado();*/
 
         botaoIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 emExecucao = true;
                 executaCronometro();
-
 
                 botaoIniciar.setVisibility(View.GONE);
                 botaoPausar.setVisibility(View.VISIBLE);

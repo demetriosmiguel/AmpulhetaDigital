@@ -18,9 +18,9 @@ public class Cronometro {
     private long calculoSegundos;
     private long segundosTotais;
 
-    private int segundos;
-    private int minutos;
-    private int horas;
+    private int segundos = 0;
+    private int minutos = 0;
+    private int horas = 0;
 
     private long seguntosTotaisInicial;
 
@@ -91,6 +91,82 @@ public class Cronometro {
         timerDisplay.append(segundos);
 
         textViewTimer.setText(timerDisplay.toString());
+    }
+
+    public void iniciar() {
+        emExecucao = true;
+        executaCronometro();
+
+        botaoIniciar.setVisibility(View.GONE);
+        botaoPausar.setVisibility(View.VISIBLE);
+        botaoReiniciar.setVisibility(View.VISIBLE);
+        botaoParar.setVisibility(View.VISIBLE);
+    }
+
+    public void pausar() {
+        emExecucao = false;
+        handler.removeCallbacks(runnable);
+
+        botaoIniciar.setVisibility(View.VISIBLE);
+        botaoPausar.setVisibility(View.GONE);
+        botaoReiniciar.setVisibility(View.VISIBLE);
+        botaoParar.setVisibility(View.VISIBLE);
+    }
+
+    public void reiniciar() {
+        handler.removeCallbacks(runnable);
+        segundosTotais = seguntosTotaisInicial;
+        emExecucao = true;
+        executaCronometro();
+
+        botaoIniciar.setVisibility(View.GONE);
+        botaoPausar.setVisibility(View.VISIBLE);
+        botaoReiniciar.setVisibility(View.VISIBLE);
+        botaoParar.setVisibility(View.VISIBLE);
+    }
+
+    public void parar() {
+        handler.removeCallbacks(runnable);
+        segundosTotais = seguntosTotaisInicial;
+        emExecucao = false;
+
+        calculaHorasMinutosSegundos();
+        exibeTempoFormatado();
+
+        botaoIniciar.setVisibility(View.VISIBLE);
+        botaoPausar.setVisibility(View.GONE);
+        botaoReiniciar.setVisibility(View.GONE);
+        botaoParar.setVisibility(View.GONE);
+    }
+
+    public void executaCronometro() {
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this, 1000);
+                try {
+                    if (emExecucao && segundosTotais > 0) {
+                        segundosTotais--;
+                        calculaHorasMinutosSegundos();
+                        exibeTempoFormatado();
+                    } else {
+                        handler.removeCallbacks(runnable);
+
+                        emExecucao = false;
+                        segundosTotais = seguntosTotaisInicial;
+
+                        botaoIniciar.setVisibility(View.VISIBLE);
+                        botaoPausar.setVisibility(View.GONE);
+                        botaoReiniciar.setVisibility(View.GONE);
+                        botaoParar.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        handler.postDelayed(runnable, 0);
     }
 
     public int getSegundos() {

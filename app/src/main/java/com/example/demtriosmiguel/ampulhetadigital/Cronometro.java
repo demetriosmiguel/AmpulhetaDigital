@@ -162,10 +162,13 @@ public class Cronometro {
                 handler.postDelayed(this, 1000);
                 try {
                     if (emExecucao && segundosTotais > 0) {
-                        segundosTotais--;
                         calculaHorasMinutosSegundos();
                         exibeTempoFormatado();
+                        segundosTotais--;
                     } else {
+                        calculaHorasMinutosSegundos();
+                        exibeTempoFormatado();
+
                         handler.removeCallbacks(runnable);
 
                         emExecucao = false;

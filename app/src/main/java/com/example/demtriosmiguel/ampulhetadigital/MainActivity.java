@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar);
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences configuracoes = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         textViewTimer.setOnClickListener(new View.OnClickListener() {
             @Override

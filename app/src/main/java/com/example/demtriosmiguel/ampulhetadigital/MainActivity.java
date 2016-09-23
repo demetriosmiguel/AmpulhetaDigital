@@ -1,5 +1,7 @@
 package com.example.demtriosmiguel.ampulhetadigital;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -37,16 +39,12 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-        // entradas do usuario
-        int segundos = 10; // 59 máximo
-//        int minutos = Integer.parseInt(sp.getString("MinutosId", "0")); // 59 máximo
-        int minutos = 0; // 59 máximo
-        int horas = 0; // 99 máximo
-
-        cronometro.setHorasMinutosSegundos(horas, minutos, segundos);
-        cronometro.setTempoTotalEmSegundos();
-        cronometro.calculaHorasMinutosSegundos();
-        cronometro.exibeTempoFormatado();
+        textViewTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogDefinirTempo();
+            }
+        });
 
         botaoIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +73,44 @@ public class MainActivity extends AppCompatActivity {
                 cronometro.parar();
             }
         });
+    }
+
+    private void showDialogDefinirTempo() {
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setTitle("Definir tempo");
+        dialog.setContentView(R.layout.dialog_definir_tempo);
+
+        Button btnDefinir = (Button) dialog.findViewById(R.id.buttonDefinir);
+        Button btnCancelar = (Button) dialog.findViewById(R.id.buttonCancelar);
+
+        final NumberPicker npHoras = (NumberPicker) dialog.findViewById(R.id.numberPickerHoras);
+        npHoras.setMaxValue(99);
+        npHoras.setMinValue(0);
+
+        final NumberPicker npMinutos = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutos);
+        npMinutos.setMaxValue(59);
+        npMinutos.setMinValue(0);
+
+        final NumberPicker npSegundos = (NumberPicker) dialog.findViewById(R.id.numberPickerSegundos);
+        npSegundos.setMaxValue(59);
+        npSegundos.setMinValue(0);
+
+        btnDefinir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cronometro.setHorasMinutosSegundos(npHoras.getValue(), npMinutos.getValue(), npSegundos.getValue());
+                dialog.dismiss();
+            }
+        });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override

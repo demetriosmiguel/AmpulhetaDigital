@@ -6,5 +6,10 @@
     <string name="reniciar">RENICIAR</string>
     <string name="relogio_zerado">00:00:00</string>
     <string name="action_settings">Configurações</string>
+    <string name="textview_horas">Horas</string>
+    <string name="button_cancelar">Cancelar</string>
+    <string name="button_definir">Definir</string>
+    <string name="textview_minutos">Minutos</string>
+    <string name="textview_segundos">Segundos</string>
 
 </resources>

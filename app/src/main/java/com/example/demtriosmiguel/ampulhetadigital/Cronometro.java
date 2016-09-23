@@ -45,6 +45,21 @@ public class Cronometro {
         this.horas = horas;
         this.minutos = minutos;
         this.segundos = segundos;
+
+        emExecucao = false;
+
+        if (handler != null) {
+            handler.removeCallbacks(runnable);
+        }
+
+        botaoIniciar.setVisibility(View.VISIBLE);
+        botaoPausar.setVisibility(View.GONE);
+        botaoReiniciar.setVisibility(View.GONE);
+        botaoParar.setVisibility(View.GONE);
+
+        setTempoTotalEmSegundos();
+        calculaHorasMinutosSegundos();
+        exibeTempoFormatado();
     }
 
     public void setTempoTotalEmSegundos() {

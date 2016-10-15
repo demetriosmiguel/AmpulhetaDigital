@@ -30,7 +30,9 @@
         android:orientation="horizontal"
         android:baselineAligned="false"
         android:weightSum="3"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:visibility="visible"
+        android:id="@+id/linearLayoutComandosCronometro">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -84,6 +86,27 @@
                 android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:visibility="gone"
+        android:gravity="center_vertical|center_horizontal"
+        android:id="@+id/linearLayoutDefinaTempo">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/textview_defina_tempo"
+            android:id="@+id/textViewDefinaTempo"
+            android:textColor="#E5E5E5"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

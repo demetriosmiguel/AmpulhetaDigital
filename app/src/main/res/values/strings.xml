@@ -11,5 +11,6 @@
     <string name="button_definir">Definir</string>
     <string name="textview_minutos">Minutos</string>
     <string name="textview_segundos">Segundos</string>
+    <string name="textview_defina_tempo">CLIQUE NO RELÓGIO PARA DEFINIR O TEMPO</string>
 
 </resources>

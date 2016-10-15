@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Cronometro {
 
@@ -172,12 +173,15 @@ public class Cronometro {
                         handler.removeCallbacks(runnable);
 
                         emExecucao = false;
-                        segundosTotais = seguntosTotaisInicial;
+                        //segundosTotais = seguntosTotaisInicial;
 
                         botaoIniciar.setVisibility(View.VISIBLE);
                         botaoPausar.setVisibility(View.GONE);
                         botaoReiniciar.setVisibility(View.GONE);
                         botaoParar.setVisibility(View.GONE);
+
+                        MainActivity.linearLayoutComandosCronometro.setVisibility(View.GONE);
+                        MainActivity.linearLayoutDefinaTempo.setVisibility(View.VISIBLE);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -209,5 +213,13 @@ public class Cronometro {
 
     public void setHoras(int horas) {
         this.horas = horas;
+    }
+
+    public long getSegundosTotais() {
+        return segundosTotais;
+    }
+
+    public void setSegundosTotais(long segundosTotais) {
+        this.segundosTotais = segundosTotais;
     }
 }

@@ -16,10 +16,13 @@ import android.widget.*;
 public class MainActivity extends AppCompatActivity {
 
     TextView textViewTimer;
+    TextView textViewDefinaTempo;
     Button botaoIniciar;
     Button botaoPausar;
     Button botaoReiniciar;
     Button botaoParar;
+    public static LinearLayout linearLayoutDefinaTempo;
+    public static LinearLayout linearLayoutComandosCronometro;
 
     Cronometro cronometro;
 
@@ -29,15 +32,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textViewTimer = (TextView) findViewById(R.id.textViewTimer);
+        textViewDefinaTempo = (TextView) findViewById(R.id.textViewDefinaTempo);
 
         botaoIniciar = (Button) findViewById(R.id.botaoIniciar);
         botaoPausar = (Button) findViewById(R.id.botaoPausar);
         botaoReiniciar = (Button) findViewById(R.id.botaoReiniciar);
         botaoParar = (Button) findViewById(R.id.botaoParar);
 
+        linearLayoutDefinaTempo = (LinearLayout) findViewById(R.id.linearLayoutDefinaTempo);
+        linearLayoutComandosCronometro = (LinearLayout) findViewById(R.id.linearLayoutComandosCronometro);
+
         cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar);
 
         SharedPreferences configuracoes = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        atualizaComandosCronometro();
 
         textViewTimer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +84,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void atualizaComandosCronometro() {
+        if (cronometro.getSegundosTotais() == 0l) {
+            linearLayoutDefinaTempo.setVisibility(View.VISIBLE);
+            linearLayoutComandosCronometro.setVisibility(View.GONE);
+        } else {
+            linearLayoutDefinaTempo.setVisibility(View.GONE);
+            linearLayoutComandosCronometro.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void showDialogDefinirTempo() {
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.setTitle("Definir tempo");
@@ -99,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cronometro.setHorasMinutosSegundos(npHoras.getValue(), npMinutos.getValue(), npSegundos.getValue());
+                atualizaComandosCronometro();
                 dialog.dismiss();
             }
         });
@@ -111,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    public void exibeToastTempoEncerrado() {
+        Toast.makeText(getApplicationContext(), "Tempo encerrado", Toast.LENGTH_LONG).show();
     }
 
     @Override

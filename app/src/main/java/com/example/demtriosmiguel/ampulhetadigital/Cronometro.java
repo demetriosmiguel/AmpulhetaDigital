@@ -30,12 +30,15 @@ public class Cronometro {
 
     private boolean emExecucao = false;
 
-    public Cronometro(TextView textViewTimer, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar) {
+    Toast feedbackMessage;
+
+    public Cronometro(TextView textViewTimer, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar, Toast feedbackMessage) {
         this.textViewTimer = textViewTimer;
         this.botaoIniciar = botaoIniciar;
         this.botaoPausar = botaoPausar;
         this.botaoReiniciar = botaoReiniciar;
         this.botaoParar = botaoParar;
+        this.feedbackMessage = feedbackMessage;
 
         botaoPausar.setVisibility(View.GONE);
         botaoReiniciar.setVisibility(View.GONE);
@@ -173,7 +176,6 @@ public class Cronometro {
                         handler.removeCallbacks(runnable);
 
                         emExecucao = false;
-                        //segundosTotais = seguntosTotaisInicial;
 
                         botaoIniciar.setVisibility(View.VISIBLE);
                         botaoPausar.setVisibility(View.GONE);
@@ -182,6 +184,9 @@ public class Cronometro {
 
                         MainActivity.linearLayoutComandosCronometro.setVisibility(View.GONE);
                         MainActivity.linearLayoutDefinaTempo.setVisibility(View.VISIBLE);
+
+                        feedbackMessage.setText("Tempo encerrado");
+                        feedbackMessage.show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -21,6 +21,10 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String DEFINIR_TAREFA = "Clique aqui para definir uma tarefa";
+    private static final String NENHUMA_TAREFA = "Nenhuma";
+
+    TextView textViewTarefa;
     TextView textViewDescricaoTarefa;
     TextView textViewTimer;
     TextView textViewDefinaTempo;
@@ -35,51 +39,18 @@ public class MainActivity extends AppCompatActivity {
 
     Cronometro cronometro;
 
-    int indexTarefaDefinida = 0;
+    int indexTarefaDefinida;
     private List<String> listaTarefas;
     private Set<String> listaTarefasCadastradas;
     private SharedPreferences tarefasCadastradas;
     private CharSequence[] tarefas;
 
+    public Toast feedbackMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        listaTarefas = new ArrayList<String>();
-        tarefasCadastradas = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
-        listaTarefasCadastradas = tarefasCadastradas.getStringSet(TarefasActivity.TAREFAS, null);
-
-        if (listaTarefasCadastradas != null && listaTarefasCadastradas.size() > 0) {
-            tarefas = new CharSequence[listaTarefasCadastradas.size()+1];
-
-            Iterator<String> tarefas = listaTarefasCadastradas.iterator();
-
-            while(tarefas.hasNext()) {
-                listaTarefas.add(tarefas.next());
-            }
-        } else {
-            tarefas = new CharSequence[1];
-        }
-
-        Collections.sort(listaTarefas);
-
-        tarefas[0] = "Não definida";
-        int index = 1;
-        for (String tarefa : listaTarefas) {
-            tarefas[index] = tarefa;
-            index++;
-        }
-
-        textViewDescricaoTarefa = (TextView) findViewById(R.id.textViewDescricaoTarefa);
-        textViewDescricaoTarefa.setText(tarefas[indexTarefaDefinida].toString());
-
-        textViewDescricaoTarefa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogDefinirTarefa();
-            }
-        });
 
         textViewTimer = (TextView) findViewById(R.id.textViewTimer);
         textViewDefinaTempo = (TextView) findViewById(R.id.textViewDefinaTempo);
@@ -92,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutDefinaTempo = (LinearLayout) findViewById(R.id.linearLayoutDefinaTempo);
         linearLayoutComandosCronometro = (LinearLayout) findViewById(R.id.linearLayoutComandosCronometro);
 
-        cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar);
+        feedbackMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
+
+        cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, feedbackMessage);
 
         SharedPreferences preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
 
@@ -100,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                                            preferencias.getInt(ConfiguracaoActivity.MINUTOS_PADRAO, 0),
                                            preferencias.getInt(ConfiguracaoActivity.SEGUNDOS_PADRAO, 0));
 
-        atualizaComandosCronometro();
+        atualizaInterfaceCronometro();
 
         textViewTimer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,8 +111,80 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (listaTarefas != null) {
+            String tarefaAtual = tarefas[indexTarefaDefinida].toString();
+
+            carregaTarefas();
+
+            int indexAtual = listaTarefas.indexOf(tarefaAtual);
+
+            if (indexAtual >= 0) {
+                indexTarefaDefinida = indexAtual+1;
+            } else {
+                indexTarefaDefinida = 0;
+            }
+
+            textViewDescricaoTarefa.setText(tarefas[indexTarefaDefinida].toString());
+        } else {
+            carregaTarefas();
+        }
+    }
+
+    private void carregaTarefas() {
+        indexTarefaDefinida = 0;
+        listaTarefas = new ArrayList<String>();
+        tarefasCadastradas = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
+        listaTarefasCadastradas = tarefasCadastradas.getStringSet(TarefasActivity.TAREFAS, null);
+
+        if (listaTarefasCadastradas != null && listaTarefasCadastradas.size() > 0) {
+            tarefas = new CharSequence[listaTarefasCadastradas.size()+1];
+
+            Iterator<String> tarefas = listaTarefasCadastradas.iterator();
+
+            while(tarefas.hasNext()) {
+                listaTarefas.add(tarefas.next());
+            }
+        } else {
+            tarefas = new CharSequence[1];
+        }
+
+        Collections.sort(listaTarefas);
+
+        tarefas[0] = DEFINIR_TAREFA;
+        int index = 1;
+        for (String tarefa : listaTarefas) {
+            tarefas[index] = tarefa;
+            index++;
+        }
+
+        textViewTarefa = (TextView) findViewById(R.id.textViewTarefa);
+        textViewDescricaoTarefa = (TextView) findViewById(R.id.textViewDescricaoTarefa);
+        textViewDescricaoTarefa.setText(tarefas[indexTarefaDefinida].toString());
+
+        textViewDescricaoTarefa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogDefinirTarefa();
+            }
+        });
+
+        if (listaTarefas.isEmpty()) {
+            textViewTarefa.setVisibility(View.GONE);
+            textViewDescricaoTarefa.setVisibility(View.GONE);
+        } else {
+            textViewTarefa.setVisibility(View.VISIBLE);
+            textViewDescricaoTarefa.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void showDialogDefinirTarefa() {
         Dialog dialog;
+
+        tarefas[0] = NENHUMA_TAREFA;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Definir tarefa");
@@ -148,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         indexTarefaDefinida = item;
+                        tarefas[0] = DEFINIR_TAREFA;
                         textViewDescricaoTarefa.setText(tarefas[indexTarefaDefinida].toString());
                         dialog.dismiss();
                     }
@@ -156,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void atualizaComandosCronometro() {
+    private void atualizaInterfaceCronometro() {
         if (cronometro.getSegundosTotais() == 0l) {
             linearLayoutDefinaTempo.setVisibility(View.VISIBLE);
             linearLayoutComandosCronometro.setVisibility(View.GONE);
@@ -190,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cronometro.setHorasMinutosSegundos(npHoras.getValue(), npMinutos.getValue(), npSegundos.getValue());
-                atualizaComandosCronometro();
+                atualizaInterfaceCronometro();
                 dialog.dismiss();
             }
         });

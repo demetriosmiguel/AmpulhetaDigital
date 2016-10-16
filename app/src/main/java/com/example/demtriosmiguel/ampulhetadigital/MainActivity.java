@@ -1,11 +1,11 @@
 package com.example.demtriosmiguel.ampulhetadigital;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,23 +13,73 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
 
+    TextView textViewDescricaoTarefa;
     TextView textViewTimer;
     TextView textViewDefinaTempo;
+
     Button botaoIniciar;
     Button botaoPausar;
     Button botaoReiniciar;
     Button botaoParar;
+
     public static LinearLayout linearLayoutDefinaTempo;
     public static LinearLayout linearLayoutComandosCronometro;
 
     Cronometro cronometro;
 
+    int indexTarefaDefinida = 0;
+    private List<String> listaTarefas;
+    private Set<String> listaTarefasCadastradas;
+    private SharedPreferences tarefasCadastradas;
+    private CharSequence[] tarefas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listaTarefas = new ArrayList<String>();
+        tarefasCadastradas = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
+        listaTarefasCadastradas = tarefasCadastradas.getStringSet(TarefasActivity.TAREFAS, null);
+
+        if (listaTarefasCadastradas != null && listaTarefasCadastradas.size() > 0) {
+            tarefas = new CharSequence[listaTarefasCadastradas.size()+1];
+
+            Iterator<String> tarefas = listaTarefasCadastradas.iterator();
+
+            while(tarefas.hasNext()) {
+                listaTarefas.add(tarefas.next());
+            }
+        } else {
+            tarefas = new CharSequence[1];
+        }
+
+        Collections.sort(listaTarefas);
+
+        tarefas[0] = "Não definida";
+        int index = 1;
+        for (String tarefa : listaTarefas) {
+            tarefas[index] = tarefa;
+            index++;
+        }
+
+        textViewDescricaoTarefa = (TextView) findViewById(R.id.textViewDescricaoTarefa);
+        textViewDescricaoTarefa.setText(tarefas[indexTarefaDefinida].toString());
+
+        textViewDescricaoTarefa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogDefinirTarefa();
+            }
+        });
 
         textViewTimer = (TextView) findViewById(R.id.textViewTimer);
         textViewDefinaTempo = (TextView) findViewById(R.id.textViewDefinaTempo);
@@ -44,7 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
         cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar);
 
-        SharedPreferences configuracoes = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
+
+        cronometro.setHorasMinutosSegundos(preferencias.getInt(ConfiguracaoActivity.HORAS_PADRAO, 0),
+                                           preferencias.getInt(ConfiguracaoActivity.MINUTOS_PADRAO, 0),
+                                           preferencias.getInt(ConfiguracaoActivity.SEGUNDOS_PADRAO, 0));
 
         atualizaComandosCronometro();
 
@@ -82,6 +136,24 @@ public class MainActivity extends AppCompatActivity {
                 cronometro.parar();
             }
         });
+    }
+
+    private void showDialogDefinirTarefa() {
+        Dialog dialog;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Definir tarefa");
+
+        builder.setSingleChoiceItems(tarefas, indexTarefaDefinida,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        indexTarefaDefinida = item;
+                        textViewDescricaoTarefa.setText(tarefas[indexTarefaDefinida].toString());
+                        dialog.dismiss();
+                    }
+                });
+        dialog = builder.create();
+        dialog.show();
     }
 
     private void atualizaComandosCronometro() {
@@ -139,22 +211,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent novo = new Intent(MainActivity.this, PreferenciasActivity.class);
-            startActivity(novo);
+            Intent configuracaoActiviy = new Intent(MainActivity.this, ConfiguracaoActivity.class);
+            startActivity(configuracaoActiviy);
+        } else if (id == R.id.action_tarefas) {
+            Intent tarefasActiviy = new Intent(MainActivity.this, TarefasActivity.class);
+            startActivity(tarefasActiviy);
         }
 
         return super.onOptionsItemSelected(item);

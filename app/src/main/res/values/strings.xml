@@ -5,12 +5,23 @@
     <string name="para">PARA</string>
     <string name="reniciar">RENICIAR</string>
     <string name="relogio_zerado">00:00:00</string>
-    <string name="action_settings">Configurações</string>
+    <string name="action_settings">Preferencias</string>
+    <string name="action_tarefas">Tarefas</string>
     <string name="textview_horas">Horas</string>
     <string name="button_cancelar">Cancelar</string>
     <string name="button_definir">Definir</string>
     <string name="textview_minutos">Minutos</string>
     <string name="textview_segundos">Segundos</string>
     <string name="textview_defina_tempo">CLIQUE NO RELÓGIO PARA DEFINIR O TEMPO</string>
+    <string name="textview_definicao_tempo_padrao">DEFINIÇÃO DE TEMPO PADRÃO</string>
+    <string name="textview_minutos_padrao">MINUTOS</string>
+    <string name="textview_segundos_padrao">SEGUNDOS</string>
+    <string name="textview_horas_padrao">HORAS</string>
+    <string name="button_salvar">SALVAR</string>
+    <string name="textview_tarefa">TAREFA:</string>
+    <string name="textview_lista_tarefas">LISTA DE TAREFAS</string>
+    <string name="button_atualizar">ATUALIZAR</string>
+    <string name="button_excluir">EXCLUIR</string>
+    <string name="button_nova_tarefa">NOVA TAREFA</string>
 
 </resources>

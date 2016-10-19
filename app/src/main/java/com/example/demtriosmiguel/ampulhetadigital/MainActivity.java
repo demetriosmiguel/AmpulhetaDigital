@@ -5,13 +5,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,12 +50,18 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences tarefasCadastradas;
     private CharSequence[] tarefas;
 
+    public MediaPlayer contagemRegressiva;
+    public MediaPlayer tempoEncerrado;
+
     public Toast feedbackMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tempoEncerrado = MediaPlayer.create(MainActivity.this, R.raw.tempo_encerrado);
+        contagemRegressiva = MediaPlayer.create(MainActivity.this, R.raw.contagem_regressiva);
 
         textViewTimer = (TextView) findViewById(R.id.textViewTimer);
         textViewDefinaTempo = (TextView) findViewById(R.id.textViewDefinaTempo);
@@ -65,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         feedbackMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
-        cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, feedbackMessage);
+        cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, tempoEncerrado, contagemRegressiva, feedbackMessage);
 
         SharedPreferences preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
 

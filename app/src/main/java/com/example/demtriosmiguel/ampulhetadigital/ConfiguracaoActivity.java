@@ -1,22 +1,12 @@
 package com.example.demtriosmiguel.ampulhetadigital;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.ArraySet;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
 
 public class ConfiguracaoActivity extends AppCompatActivity {
 
@@ -61,24 +51,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 SharedPreferences settings = getSharedPreferences(PREFERENCIAS_PADRAO, 0);
                 SharedPreferences.Editor editor = settings.edit();
 
-//                List<String> listTarefas = new ArrayList<String>();
-//                Set<String> listaTarefas = settings.getStringSet("tarefas", null);
-//
-//                if (listaTarefas != null) {
-//                    Iterator<String> tarefas = listaTarefas.iterator();
-//
-//                    while(tarefas.hasNext()) {
-//                        listTarefas.add(tarefas.next());
-//                    }
-//                }
-//
-//                Set<String> listaTarefas2 = new HashSet<String>();
-//                listaTarefas2.add("primeira");
-//                listaTarefas2.add("segunda");
-//                listaTarefas2.add("terceira");
-//
-//                editor.putStringSet("tarefas", listaTarefas2);
-
                 editor.putInt(HORAS_PADRAO, npHorasPadrao.getValue());
                 editor.putInt(MINUTOS_PADRAO, npMinutossPadrao.getValue());
                 editor.putInt(SEGUNDOS_PADRAO, npSegundosPadrao.getValue());
@@ -88,6 +60,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Não foi possível salvar. Tente novamente", Toast.LENGTH_LONG).show();
                 }
+
+                finish();
             }
         });
     }

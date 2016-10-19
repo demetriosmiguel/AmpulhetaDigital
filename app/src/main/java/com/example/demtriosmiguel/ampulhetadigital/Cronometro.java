@@ -1,5 +1,6 @@
 package com.example.demtriosmiguel.ampulhetadigital;
 
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -32,12 +33,17 @@ public class Cronometro {
 
     Toast feedbackMessage;
 
-    public Cronometro(TextView textViewTimer, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar, Toast feedbackMessage) {
+    MediaPlayer tempoEncerrado;
+    MediaPlayer contagemRegressiva;
+
+    public Cronometro(TextView textViewTimer, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar, MediaPlayer tempoEncerrado, MediaPlayer contagemRegressiva, Toast feedbackMessage) {
         this.textViewTimer = textViewTimer;
         this.botaoIniciar = botaoIniciar;
         this.botaoPausar = botaoPausar;
         this.botaoReiniciar = botaoReiniciar;
         this.botaoParar = botaoParar;
+        this.tempoEncerrado = tempoEncerrado;
+        this.contagemRegressiva = contagemRegressiva;
         this.feedbackMessage = feedbackMessage;
 
         botaoPausar.setVisibility(View.GONE);
@@ -166,10 +172,19 @@ public class Cronometro {
                 handler.postDelayed(this, 1000);
                 try {
                     if (emExecucao && segundosTotais > 0) {
+                        if (segundosTotais <= 10 && segundosTotais >= 1) {
+                            contagemRegressiva.start();
+                        }
                         calculaHorasMinutosSegundos();
                         exibeTempoFormatado();
                         segundosTotais--;
                     } else {
+                        if (contagemRegressiva.isPlaying()) {
+                            contagemRegressiva.pause();
+                            contagemRegressiva.seekTo(0);
+                            tempoEncerrado.start();
+                        }
+
                         calculaHorasMinutosSegundos();
                         exibeTempoFormatado();
 

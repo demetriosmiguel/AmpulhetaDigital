@@ -1,5 +1,7 @@
 package com.example.demtriosmiguel.ampulhetadigital;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.View;
@@ -36,7 +38,9 @@ public class Cronometro {
     MediaPlayer tempoEncerrado;
     MediaPlayer contagemRegressiva;
 
-    public Cronometro(TextView textViewTimer, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar, MediaPlayer tempoEncerrado, MediaPlayer contagemRegressiva, Toast feedbackMessage) {
+    SharedPreferences preferencias;
+
+    public Cronometro(TextView textViewTimer, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar, MediaPlayer tempoEncerrado, MediaPlayer contagemRegressiva, SharedPreferences preferencias, Toast feedbackMessage) {
         this.textViewTimer = textViewTimer;
         this.botaoIniciar = botaoIniciar;
         this.botaoPausar = botaoPausar;
@@ -44,6 +48,7 @@ public class Cronometro {
         this.botaoParar = botaoParar;
         this.tempoEncerrado = tempoEncerrado;
         this.contagemRegressiva = contagemRegressiva;
+        this.preferencias = preferencias;
         this.feedbackMessage = feedbackMessage;
 
         botaoPausar.setVisibility(View.GONE);
@@ -172,7 +177,7 @@ public class Cronometro {
                 handler.postDelayed(this, 1000);
                 try {
                     if (emExecucao && segundosTotais > 0) {
-                        if (segundosTotais <= 10 && segundosTotais >= 1) {
+                        if (segundosTotais <= 10 && segundosTotais >= 1 && preferencias.getBoolean(ConfiguracaoActivity.SOM_CONTAGEM_REGRESSIVA, true)) {
                             contagemRegressiva.start();
                         }
                         calculaHorasMinutosSegundos();
@@ -180,8 +185,11 @@ public class Cronometro {
                         segundosTotais--;
                     } else {
                         if (contagemRegressiva.isPlaying()) {
-                            contagemRegressiva.pause();
-                            contagemRegressiva.seekTo(0);
+                            contagemRegressiva.stop();
+                            contagemRegressiva.prepareAsync();
+                        }
+
+                        if (preferencias.getBoolean(ConfiguracaoActivity.SOM_TEMPO_ENCERRADO, true)) {
                             tempoEncerrado.start();
                         }
 

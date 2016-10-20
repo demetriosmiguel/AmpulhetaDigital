@@ -23,5 +23,6 @@
     <string name="button_atualizar">ATUALIZAR</string>
     <string name="button_excluir">EXCLUIR</string>
     <string name="button_nova_tarefa">NOVA TAREFA</string>
+    <string name="textview_alerta_sonoro">ALERTAS SONOROS</string>
 
 </resources>

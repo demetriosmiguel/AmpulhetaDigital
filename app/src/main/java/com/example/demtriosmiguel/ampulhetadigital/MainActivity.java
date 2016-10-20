@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
+
         tempoEncerrado = MediaPlayer.create(MainActivity.this, R.raw.tempo_encerrado);
         contagemRegressiva = MediaPlayer.create(MainActivity.this, R.raw.contagem_regressiva);
 
@@ -76,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         feedbackMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
-        cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, tempoEncerrado, contagemRegressiva, feedbackMessage);
+        cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, tempoEncerrado, contagemRegressiva, preferencias, feedbackMessage);
 
-        SharedPreferences preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
 
         cronometro.setHorasMinutosSegundos(preferencias.getInt(ConfiguracaoActivity.HORAS_PADRAO, 0),
                                            preferencias.getInt(ConfiguracaoActivity.MINUTOS_PADRAO, 0),

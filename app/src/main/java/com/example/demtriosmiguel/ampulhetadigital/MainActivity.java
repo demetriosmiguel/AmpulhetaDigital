@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewDescricaoTarefa;
     TextView textViewTimer;
     TextView textViewDefinaTempo;
+    TextView textViewTempoEmPausa;
+    TextView textViewTimerEmPausa;
+
+    Button botaoRepetirCronometro;
 
     Button botaoIniciar;
     Button botaoPausar;
@@ -50,23 +54,29 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences tarefasCadastradas;
     private CharSequence[] tarefas;
 
-    public MediaPlayer contagemRegressiva;
-    public MediaPlayer tempoEncerrado;
+    public MediaPlayer somContagemRegressiva;
+    public MediaPlayer somTempoEncerrado;
 
     public Toast feedbackMessage;
+    private SharedPreferences preferencias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
+        preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
 
-        tempoEncerrado = MediaPlayer.create(MainActivity.this, R.raw.tempo_encerrado);
-        contagemRegressiva = MediaPlayer.create(MainActivity.this, R.raw.contagem_regressiva);
+        somTempoEncerrado = MediaPlayer.create(MainActivity.this, R.raw.tempo_encerrado);
+        somContagemRegressiva = MediaPlayer.create(MainActivity.this, R.raw.contagem_regressiva);
 
         textViewTimer = (TextView) findViewById(R.id.textViewTimer);
         textViewDefinaTempo = (TextView) findViewById(R.id.textViewDefinaTempo);
+
+        textViewTempoEmPausa = (TextView) findViewById(R.id.textViewTempoEmPausa);
+        textViewTimerEmPausa = (TextView) findViewById(R.id.textViewTimerEmPausa);
+
+        botaoRepetirCronometro = (Button) findViewById(R.id.botaoRepetirCronometro);
 
         botaoIniciar = (Button) findViewById(R.id.botaoIniciar);
         botaoPausar = (Button) findViewById(R.id.botaoPausar);
@@ -78,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         feedbackMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
-        cronometro = new Cronometro(textViewTimer, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, tempoEncerrado, contagemRegressiva, preferencias, feedbackMessage);
+        cronometro = new Cronometro(textViewTimer,textViewTimerEmPausa, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, somTempoEncerrado, somContagemRegressiva, preferencias, feedbackMessage);
 
 
         cronometro.setHorasMinutosSegundos(preferencias.getInt(ConfiguracaoActivity.HORAS_PADRAO, 0),
@@ -91,6 +101,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showDialogDefinirTempo();
+            }
+        });
+
+        botaoRepetirCronometro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cronometro.isRepetir()) {
+                    cronometro.setRepetir(false);
+                    botaoRepetirCronometro.setBackgroundResource(R.drawable.ic_autorenew_gray_16dp);
+                } else {
+                    cronometro.setRepetir(true);
+                    botaoRepetirCronometro.setBackgroundResource(R.drawable.ic_autorenew_white_16dp);
+                }
             }
         });
 
@@ -144,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             carregaTarefas();
         }
+
+        carregaTempoEmPausa();
     }
 
     private void carregaTarefas() {
@@ -193,6 +218,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void carregaTempoEmPausa() {
+        if (preferencias.getBoolean(ConfiguracaoActivity.TEMPO_EM_PAUSA, false)) {
+            textViewTempoEmPausa.setVisibility(View.VISIBLE);
+            textViewTimerEmPausa.setVisibility(View.VISIBLE);
+        } else {
+            textViewTempoEmPausa.setVisibility(View.GONE);
+            textViewTimerEmPausa.setVisibility(View.GONE);
+        }
+    }
+
     private void showDialogDefinirTarefa() {
         Dialog dialog;
 
@@ -215,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void atualizaInterfaceCronometro() {
-        if (cronometro.getSegundosTotais() == 0l) {
+        if (cronometro.getMilisegundosTotais() == 0l) {
             linearLayoutDefinaTempo.setVisibility(View.VISIBLE);
             linearLayoutComandosCronometro.setVisibility(View.GONE);
         } else {
@@ -244,10 +279,15 @@ public class MainActivity extends AppCompatActivity {
         npSegundos.setMaxValue(59);
         npSegundos.setMinValue(0);
 
+        npHoras.setValue(cronometro.getHoras());
+        npMinutos.setValue(cronometro.getMinutos());
+        npSegundos.setValue(cronometro.getSegundos());
+
         btnDefinir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cronometro.setHorasMinutosSegundos(npHoras.getValue(), npMinutos.getValue(), npSegundos.getValue());
+                cronometro.zeraTempoEmPausa();
                 atualizaInterfaceCronometro();
                 dialog.dismiss();
             }
@@ -261,10 +301,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dialog.show();
-    }
-
-    public void exibeToastTempoEncerrado() {
-        Toast.makeText(getApplicationContext(), "Tempo encerrado", Toast.LENGTH_LONG).show();
     }
 
     @Override

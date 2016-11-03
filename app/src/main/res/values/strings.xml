@@ -24,5 +24,7 @@
     <string name="button_excluir">EXCLUIR</string>
     <string name="button_nova_tarefa">NOVA TAREFA</string>
     <string name="textview_alerta_sonoro">ALERTAS SONOROS</string>
+    <string name="textview_tempo_em_pausa">TEMPO EM PAUSA:</string>
+    <string name="textview_exibir_tempo_em_pausa">Exibir tempo em pausa</string>
 
 </resources>

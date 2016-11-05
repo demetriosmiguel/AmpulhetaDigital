@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_above="@+id/buttonSalvarPreferencias">
+        android:layout_above="@+id/linearLayoutBotoesConfiguracao">
 
         <LinearLayout
             android:orientation="vertical"
@@ -42,7 +42,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/textview_horas"
                         android:id="@+id/textViewHoras" />
 
@@ -63,7 +63,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/textview_minutos"
                         android:id="@+id/textViewMinutos" />
 
@@ -84,7 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/textview_segundos"
                         android:id="@+id/textViewSegundos" />
 
@@ -189,13 +189,50 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
+    <LinearLayout
+        android:id="@+id/linearLayoutBotoesConfiguracao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_salvar"
-        android:id="@+id/buttonSalvarPreferencias"
-        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:baselineAligned="false"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_voltar"
+                android:id="@+id/buttonVoltarPreferencias"
+                android:layout_gravity="center_horizontal"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_salvar"
+                android:id="@+id/buttonSalvarPreferencias"
+                android:layout_gravity="center_horizontal"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

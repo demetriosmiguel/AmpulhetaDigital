@@ -29,6 +29,7 @@ public class TarefasActivity extends AppCompatActivity {
     private Set<String> listaTarefasCadastradas;
     private SharedPreferences settings;
     private EditText edtTxtTarefa;
+    private Button btnVoltar;
     private Button btnNovaTarefa;
     private EditText edtTxtNovaTarefa;
     private SharedPreferences.Editor editor;
@@ -49,6 +50,14 @@ public class TarefasActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String a = (String) listViewTarefas.getItemAtPosition(i);
                 showDialogEdicaoTarefa(a);
+            }
+        });
+
+        btnVoltar = (Button) findViewById(R.id.buttonVoltarTarefa);
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

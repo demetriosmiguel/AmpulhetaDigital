@@ -28,6 +28,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private Switch switchTempoEncerrado;
     private Switch switchContagemRegressiva;
 
+    private Button btnVoltar;
     private Button btnSalvar;
 
     @Override
@@ -64,6 +65,14 @@ public class ConfiguracaoActivity extends AppCompatActivity {
 
         switchContagemRegressiva = (Switch) findViewById(R.id.switchContagemRegressiva);
         switchContagemRegressiva.setChecked(preferencias.getBoolean(SOM_CONTAGEM_REGRESSIVA, true));
+
+        btnVoltar = (Button) findViewById(R.id.buttonVoltarPreferencias);
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         btnSalvar = (Button) findViewById(R.id.buttonSalvarPreferencias);
 

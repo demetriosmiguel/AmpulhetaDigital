@@ -8,14 +8,15 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:id="@+id/editTextNovaTarefa"
+        android:inputType="textCapSentences"
         android:hint="Nome da tarefa" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_salvar"
-        android:id="@+id/buttonSalvarNovaTarefa" />
+        android:id="@+id/buttonSalvarNovaTarefa"
+        android:textAllCaps="false" />
 
 </LinearLayout>

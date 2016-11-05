@@ -268,14 +268,17 @@ public class MainActivity extends AppCompatActivity {
         Button btnCancelar = (Button) dialog.findViewById(R.id.buttonCancelar);
 
         final NumberPicker npHoras = (NumberPicker) dialog.findViewById(R.id.numberPickerHoras);
+        npHoras.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         npHoras.setMaxValue(99);
         npHoras.setMinValue(0);
 
         final NumberPicker npMinutos = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutos);
+        npMinutos.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         npMinutos.setMaxValue(59);
         npMinutos.setMinValue(0);
 
         final NumberPicker npSegundos = (NumberPicker) dialog.findViewById(R.id.numberPickerSegundos);
+        npSegundos.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         npSegundos.setMaxValue(59);
         npSegundos.setMinValue(0);
 

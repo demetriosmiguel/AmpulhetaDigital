@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -28,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/button_excluir"
-                android:id="@+id/buttonExcluir" />
+                android:id="@+id/buttonExcluir"
+                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -41,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/button_atualizar"
-                android:id="@+id/buttonAtualizar" />
+                android:id="@+id/buttonAtualizar"
+                android:textAllCaps="false" />
         </LinearLayout>
 
     </LinearLayout>

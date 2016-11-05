@@ -22,15 +22,51 @@
         android:id="@+id/listViewTarefas"
         android:layout_below="@id/textViewDefinicaoTempoPadrao"
         android:layout_alignParentLeft="true"
-        android:layout_above="@+id/buttonNovaTarefa" />
+        android:layout_above="@+id/linearLayoutBotoesTarefas" />
 
-    <Button
+    <LinearLayout
+        android:id="@+id/linearLayoutBotoesTarefas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_nova_tarefa"
-        android:id="@+id/buttonNovaTarefa"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:baselineAligned="false"
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_voltar"
+                android:id="@+id/buttonVoltarTarefa"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_nova_tarefa"
+                android:id="@+id/buttonNovaTarefa"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

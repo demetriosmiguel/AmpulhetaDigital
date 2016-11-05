@@ -17,14 +17,15 @@
     <string name="textview_minutos_padrao">MINUTOS</string>
     <string name="textview_segundos_padrao">SEGUNDOS</string>
     <string name="textview_horas_padrao">HORAS</string>
-    <string name="button_salvar">SALVAR</string>
+    <string name="button_salvar">Salvar</string>
     <string name="textview_tarefa">TAREFA:</string>
     <string name="textview_lista_tarefas">LISTA DE TAREFAS</string>
-    <string name="button_atualizar">ATUALIZAR</string>
-    <string name="button_excluir">EXCLUIR</string>
-    <string name="button_nova_tarefa">NOVA TAREFA</string>
+    <string name="button_atualizar">Atualizar</string>
+    <string name="button_excluir">Excluir</string>
+    <string name="button_nova_tarefa">Nova</string>
     <string name="textview_alerta_sonoro">ALERTAS SONOROS</string>
     <string name="textview_tempo_em_pausa">TEMPO EM PAUSA:</string>
     <string name="textview_exibir_tempo_em_pausa">Exibir tempo em pausa</string>
+    <string name="button_voltar">Voltar</string>
 
 </resources>

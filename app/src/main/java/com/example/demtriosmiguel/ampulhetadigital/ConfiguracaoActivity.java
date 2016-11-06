@@ -21,7 +21,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     public static final String SOM_CONTAGEM_REGRESSIVA = "somContagemRegressiva";
 
     private NumberPicker npHorasPadrao;
-    private NumberPicker npMinutossPadrao;
+    private NumberPicker npMinutosPadrao;
     private NumberPicker npSegundosPadrao;
 
     private Switch switchTempoEmPausa;
@@ -43,10 +43,10 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         npHorasPadrao.setMaxValue(99);
         npHorasPadrao.setMinValue(0);
 
-        npMinutossPadrao = (NumberPicker) findViewById(R.id.numberPickerMinutosPadrao);
-        npMinutossPadrao.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        npMinutossPadrao.setMaxValue(59);
-        npMinutossPadrao.setMinValue(0);
+        npMinutosPadrao = (NumberPicker) findViewById(R.id.numberPickerMinutosPadrao);
+        npMinutosPadrao.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        npMinutosPadrao.setMaxValue(59);
+        npMinutosPadrao.setMinValue(0);
 
         npSegundosPadrao = (NumberPicker) findViewById(R.id.numberPickerSegundosPadrao);
         npSegundosPadrao.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -54,7 +54,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         npSegundosPadrao.setMinValue(0);
 
         npHorasPadrao.setValue(preferencias.getInt(HORAS_PADRAO, 0));
-        npMinutossPadrao.setValue(preferencias.getInt(MINUTOS_PADRAO, 0));
+        npMinutosPadrao.setValue(preferencias.getInt(MINUTOS_PADRAO, 0));
         npSegundosPadrao.setValue(preferencias.getInt(SEGUNDOS_PADRAO, 0));
 
         switchTempoEmPausa = (Switch) findViewById(R.id.switchTempoEmPausa);
@@ -83,7 +83,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = settings.edit();
 
                 editor.putInt(HORAS_PADRAO, npHorasPadrao.getValue());
-                editor.putInt(MINUTOS_PADRAO, npMinutossPadrao.getValue());
+                editor.putInt(MINUTOS_PADRAO, npMinutosPadrao.getValue());
                 editor.putInt(SEGUNDOS_PADRAO, npSegundosPadrao.getValue());
 
                 editor.putBoolean(TEMPO_EM_PAUSA, switchTempoEmPausa.isChecked());

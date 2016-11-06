@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     int indexTarefaDefinida;
     private List<String> listaTarefas;
     private Set<String> listaTarefasCadastradas;
-    private SharedPreferences tarefasCadastradas;
     private CharSequence[] tarefas;
 
     public MediaPlayer somContagemRegressiva;
@@ -88,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         feedbackMessage = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
-        cronometro = new Cronometro(textViewTimer,textViewTimerEmPausa, botaoIniciar, botaoPausar, botaoReiniciar, botaoParar, somTempoEncerrado, somContagemRegressiva, preferencias, feedbackMessage);
+        cronometro = new Cronometro(textViewTimer,textViewTimerEmPausa, botaoIniciar, botaoPausar, botaoReiniciar,
+                                    botaoParar, somTempoEncerrado, somContagemRegressiva, preferencias, feedbackMessage);
 
 
         cronometro.setHorasMinutosSegundos(preferencias.getInt(ConfiguracaoActivity.HORAS_PADRAO, 0),
@@ -174,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
     private void carregaTarefas() {
         indexTarefaDefinida = 0;
         listaTarefas = new ArrayList<String>();
-        tarefasCadastradas = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
-        listaTarefasCadastradas = tarefasCadastradas.getStringSet(TarefasActivity.TAREFAS, null);
+        preferencias = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
+        listaTarefasCadastradas = preferencias.getStringSet(TarefasActivity.TAREFAS, null);
 
         if (listaTarefasCadastradas != null && listaTarefasCadastradas.size() > 0) {
             tarefas = new CharSequence[listaTarefasCadastradas.size()+1];

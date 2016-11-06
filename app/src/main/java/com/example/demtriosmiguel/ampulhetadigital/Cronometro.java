@@ -57,7 +57,9 @@ public class Cronometro {
 
     SharedPreferences preferencias;
 
-    public Cronometro(TextView textViewTimer, TextView textViewTimerEmPausa, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar, MediaPlayer somTempoEncerrado, MediaPlayer somContagemRegressiva, SharedPreferences preferencias, Toast feedbackMessage) {
+    public Cronometro(TextView textViewTimer, TextView textViewTimerEmPausa, Button botaoIniciar, Button botaoPausar, Button botaoReiniciar, Button botaoParar,
+                      MediaPlayer somTempoEncerrado, MediaPlayer somContagemRegressiva, SharedPreferences preferencias, Toast feedbackMessage)
+    {
         this.textViewTimer = textViewTimer;
         this.textViewTimerEmPausa = textViewTimerEmPausa;
         this.botaoIniciar = botaoIniciar;
@@ -90,12 +92,12 @@ public class Cronometro {
         botaoReiniciar.setVisibility(View.GONE);
         botaoParar.setVisibility(View.GONE);
 
-        setTempoTotalEmSegundos();
+        setTempoTotalEmMilisegundos();
         calculaHorasMinutosSegundos();
         exibeTempoFormatado();
     }
 
-    public void setTempoTotalEmSegundos() {
+    public void setTempoTotalEmMilisegundos() {
         milisegundosTotais = (segundos + (minutos * 60) + (horas * 60 * 60)) * 1000;
 
         // registra tempo total definido para caso o cronometro seja reiniciado ou parado
@@ -368,31 +370,15 @@ public class Cronometro {
         return segundos;
     }
 
-    public void setSegundos(int segundos) {
-        this.segundos = segundos;
-    }
-
     public int getMinutos() {
         return minutos;
-    }
-
-    public void setMinutos(int minutos) {
-        this.minutos = minutos;
     }
 
     public int getHoras() {
         return horas;
     }
 
-    public void setHoras(int horas) {
-        this.horas = horas;
-    }
-
     public long getMilisegundosTotais() {
         return milisegundosTotais;
-    }
-
-    public void setMilisegundosTotais(long milisegundosTotais) {
-        this.milisegundosTotais = milisegundosTotais;
     }
 }

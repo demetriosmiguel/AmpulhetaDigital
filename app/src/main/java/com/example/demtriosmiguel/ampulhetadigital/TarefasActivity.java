@@ -27,11 +27,11 @@ public class TarefasActivity extends AppCompatActivity {
     private List<String> listaTarefas;
     private ListView listViewTarefas;
     private Set<String> listaTarefasCadastradas;
-    private SharedPreferences settings;
     private EditText edtTxtTarefa;
+    private EditText edtTxtNovaTarefa;
     private Button btnVoltar;
     private Button btnNovaTarefa;
-    private EditText edtTxtNovaTarefa;
+    private SharedPreferences preferencia;
     private SharedPreferences.Editor editor;
 
     @Override
@@ -73,10 +73,10 @@ public class TarefasActivity extends AppCompatActivity {
     private void carregaListaTarefas() {
         listaTarefas.clear();
 
-        settings = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
-        editor = settings.edit();
+        preferencia = getSharedPreferences(ConfiguracaoActivity.PREFERENCIAS_PADRAO, Context.MODE_PRIVATE);
+        editor = preferencia.edit();
 
-        listaTarefasCadastradas = settings.getStringSet(TAREFAS, null);
+        listaTarefasCadastradas = preferencia.getStringSet(TAREFAS, null);
 
         if (listaTarefasCadastradas != null) {
             Iterator<String> tarefas = listaTarefasCadastradas.iterator();

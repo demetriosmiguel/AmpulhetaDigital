@@ -115,7 +115,9 @@ public class TarefasActivity extends AppCompatActivity {
 
                 editor.putStringSet(TAREFAS, listaTarefasCadastradas);
 
-                if (!editor.commit()) {
+                if (edtTxtNovaTarefa.getText() == null | edtTxtNovaTarefa.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Insira o nome da tarefa", Toast.LENGTH_LONG).show();
+                } else if (!editor.commit()) {
                     Toast.makeText(getApplicationContext(), "Erro. Tente novamente", Toast.LENGTH_LONG).show();
                 } else {
                     carregaListaTarefas();
@@ -149,7 +151,9 @@ public class TarefasActivity extends AppCompatActivity {
 
                 editor.putStringSet(TAREFAS, listaTarefasCadastradas);
 
-                if (!editor.commit()) {
+                if (edtTxtTarefa.getText() == null | edtTxtTarefa.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Campo vazio. Utilize o botão excluir para remover a tarefa", Toast.LENGTH_LONG).show();
+                } else if (!editor.commit()) {
                     Toast.makeText(getApplicationContext(), "Erro. Tente novamente", Toast.LENGTH_LONG).show();
                 } else {
                     carregaListaTarefas();
